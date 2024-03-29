@@ -51,6 +51,7 @@ class Layouter:
         self._svg_width = logo_size[0]
         self._svg_height = logo_size[1]
         self._max_width = 800
+        self._bg_color = None
         self._svg_str = None
         self._update_svg_size_()
 
@@ -215,6 +216,9 @@ class Layouter:
         # Layout and add nodes into dom tree.
         if end_frame is None:
             end_frame = len(self._delays)
+        if self._bg_color is not None:
+            self._svg.setAttribute('style',
+                                   'background-color: {};'.format(self._bg_color))
         display_offsets = self.solve_layout(max_width, start_frame, end_frame)
         if display_offsets is None:
             return

@@ -276,10 +276,11 @@ class Visualizer():
         self._next_cursor_id += 1
         return _CursorRange(self._next_cursor_id, name, st, ed, step)
 
-    def layout(self, max_width=800):
+    def layout(self, max_width=800, bg_color=None):
         """Layout all the svg animation pictures.
         Args:
             max_width (int): The maximum strip width limit to layouter.
+            bg_color (str): The background color for the export animation.
 
         Returns:
             str: The final svg string to display.
@@ -288,6 +289,7 @@ class Visualizer():
             return
         global _next_display_id
         self._layouter._max_width = max_width
+        self._layouter._bg_color = bg_color
         display.display(self._layouter, display_id='algviz_{}'.format(_next_display_id))
         _next_display_id += 1
 
