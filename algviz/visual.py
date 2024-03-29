@@ -207,17 +207,20 @@ class Visualizer():
         _next_display_id += 1
         return map
 
-    def createLogger(self, buffer_lines=10, name=None, font_size=12, show_line_num=True):
+    def createLogger(self, buffer_lines=10, name=None, font_size=12, show_line_num=True, text_color=None):
         """
         Args:
             buffer_lines (int): Maximum buffer line of this logger.
             name (str): The name of this Vector object.
+            font_size (int): The log texts font size.
+            show_line_num (boolean): Wheather add line number prefix or not.
+            text_color (str): The log texts font color.
 
         Returns:
             Logger: Created Logger object.
         """
         global _next_display_id
-        logg = Logger(buffer_lines, font_size, show_line_num)
+        logg = Logger(buffer_lines, font_size, show_line_num, text_color)
         self._element2display[logg] = _next_display_id
         if name is not None:
             self._displayid2name[_next_display_id] = name

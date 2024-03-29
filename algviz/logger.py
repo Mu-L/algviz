@@ -23,7 +23,7 @@ class Logger():
     And if the buffer lines overflow, the oldest lines in the buffer will be discard.
     """
 
-    def __init__(self, buffer_lines, font_size, show_line_num):
+    def __init__(self, buffer_lines, font_size, show_line_num, text_color):
         """
         Args:
             buffer_lines (int): Set the max buffer lines for cached logs. Override the oldest line if overflow.
@@ -41,6 +41,7 @@ class Logger():
         self._next_node_id = 0
         self._log_lines = 0
         self._show_line_num = show_line_num
+        self._text_color = text_color
 
     def write(self, data):
         """Write log data. Use \\n to split multi-lines.
@@ -81,6 +82,8 @@ class Logger():
             txt.setAttribute('x', '{}'.format(LOG_OFFSET_X))
             txt.setAttribute('y', '{:.2f}'.format(self._font_size * (i * 1.2 + 1)))
             txt.setAttribute('font-size', '{:.2f}'.format(self._font_size))
+            if self._text_color is not None:
+                txt.setAttribute('fill', self._text_color)
             txt.setAttribute('font-family', FONT_FAMILY)
             text = self._dom.createTextNode('{}'.format(log))
             txt.appendChild(text)
