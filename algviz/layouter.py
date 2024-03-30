@@ -226,7 +226,6 @@ class Layouter:
         if self._bg_color is not None:
             self._svg.setAttribute('style',
                                    'background-color: {};'.format(self._bg_color))
-        print('layout export start:{}, end:{}'.format(start_frame, end_frame))
         display_offsets = self.solve_layout(max_width, start_frame, end_frame)
         if display_offsets is None:
             return
