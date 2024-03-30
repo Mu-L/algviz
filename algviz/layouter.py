@@ -53,6 +53,7 @@ class Layouter:
         self._max_width = 800
         self._bg_color = None
         self._svg_str = None
+        self._next_export_start = 0
         self._update_svg_size_()
 
     def solve_layout(self, strip_width, start_frame, end_frame):
@@ -209,17 +210,23 @@ class Layouter:
         self._link.appendChild(bg_group)
 
     def _repr_svg_(self):
-        if self._svg_str is None:
-            self._svg_str = self.export(self._max_width, 0, None)
+        self._svg_str = self.export(self._max_width,
+                                    self._next_export_start, None)
+        self._next_export_start = len(self._delays)
         return self._svg_str
 
     def export(self, max_width, start_frame, end_frame):
+        # Clear child elements in link.
+        children = [child for child in self._link.childNodes]
+        for child in children:
+            self._link.removeChild(child)
         # Layout and add nodes into dom tree.
         if end_frame is None:
             end_frame = len(self._delays)
         if self._bg_color is not None:
             self._svg.setAttribute('style',
                                    'background-color: {};'.format(self._bg_color))
+        print('layout export start:{}, end:{}'.format(start_frame, end_frame))
         display_offsets = self.solve_layout(max_width, start_frame, end_frame)
         if display_offsets is None:
             return
@@ -244,6 +251,7 @@ class Layouter:
         # Add description into svg.
         comment = self._dom.createComment(str(info))
         self._svg.appendChild(comment)
+        self._delays.pop()  # Pop logo show time.
         return self._dom.toxml()
 
 
