@@ -205,8 +205,8 @@ class Layouter:
                 r.setAttribute('stroke-dasharray', '1, 5')
                 r.setAttribute('fill', 'none')
                 bg_group.appendChild(r)
-                self.layout_info[display_id] = (offset[0] + 1, offset[1] + 1 - txt_font * 1.5,
-                                                seq_size[0] - 1, seq_size[1] - 1 + txt_font * 1.5)
+                self.layout_info[display_id] = (offset[0] + 2, offset[1] + 2 - txt_font * 1.5,
+                                                seq_size[0] - 2, seq_size[1] - 2 + txt_font * 1.5)
         self._link.appendChild(bg_group)
 
     def _repr_svg_(self):
